@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import difflib
 import os
-
+import gdown
 # Page settings
 st.set_page_config(
     page_title="Fake Logo Detector",
@@ -62,11 +62,15 @@ classes = [
 def load_model_cached():
     model_path = 'fine_tuned_model.h5'
     if not os.path.exists(model_path):
-        st.error("Model file not found. Please place 'fine_tuned_model.h5' in the same directory.")
-        return None
+        with st.spinner("Downloading model from Google Drive..."):
+            file_id = "1WHuCEMLSCz5ZFaDIsFdcvBM4RB9QIHqH"
+            url = f"https://drive.google.com/uc?id={file_id}"
+            try:
+                gdown.download(url, model_path, quiet=False)
+            except Exception as e:
+                st.error(f"❌ Failed to download model: {e}")
+                return None
     return load_model(model_path)
-
-model = load_model_cached()
 
 # Sidebar
 st.sidebar.header("🔍 Logo Detection")
