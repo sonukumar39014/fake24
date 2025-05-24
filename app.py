@@ -58,6 +58,8 @@ classes = [
 ]
 
 # Load model with caching
+from tensorflow.keras.saving import custom_object_scope
+
 @st.cache_resource
 def load_model_cached():
     model_path = 'fine_tuned_model.h5'
@@ -70,9 +72,12 @@ def load_model_cached():
             except Exception as e:
                 st.error(f"❌ Failed to download model: {e}")
                 return None
-    return load_model(model_path, compile=False)
-
-
+    try:
+        with custom_object_scope({}):
+            return load_model(model_path, compile=False)
+    except TypeError as e:
+        st.error(f"❌ Model loading failed: {e}")
+        return None
 # ✅ Add this to fix the error:
 model = load_model_cached()
 
