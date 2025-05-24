@@ -63,11 +63,11 @@ from tensorflow.keras.saving import custom_object_scope
 @st.cache_resource
 def load_model_cached():
     import gdown
-    model_path = "fine_tuned_model.h5"
+    model_path = "fine_tuned_model.keras"
 
     if not os.path.exists(model_path):
         with st.spinner("Downloading model from Google Drive..."):
-            file_id = "1uGjmYnj1i9606lX_CIzwEw_kjGBR_FuH"
+            file_id = "1hgn92xI38X9HSTFW1ClpzhggL7awE0cZ"
             url = f"https://drive.google.com/uc?id={file_id}"
             try:
                 gdown.download(url, model_path, quiet=False)
