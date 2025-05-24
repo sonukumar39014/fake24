@@ -62,20 +62,20 @@ from tensorflow.keras.saving import custom_object_scope
 
 @st.cache_resource
 def load_model_cached():
-    model_path = 'fine_tuned_model.h5'
+    import gdown
+    model_path = "fine_tuned_model.h5"
+
     if not os.path.exists(model_path):
         with st.spinner("Downloading model from Google Drive..."):
-            file_id = "1WHuCEMLSCz5ZFaDIsFdcvBM4RB9QIHqH"
-            url = f"https://drive.google.com/uc?id={file_id}"
             try:
-                gdown.download(url, model_path, quiet=False)
+                gdown.download(id="17P1ggqtgkSgnUW8i9feQ81MpRmgXoxZP", output=model_path, quiet=False, fuzzy=True)
             except Exception as e:
                 st.error(f"❌ Failed to download model: {e}")
                 return None
+
     try:
-        with custom_object_scope({}):
-            return load_model(model_path, compile=False)
-    except TypeError as e:
+        return load_model(model_path, compile=False)
+    except Exception as e:
         st.error(f"❌ Model loading failed: {e}")
         return None
 # ✅ Add this to fix the error:
