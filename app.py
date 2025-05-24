@@ -62,24 +62,16 @@ from tensorflow.keras.saving import custom_object_scope
 
 @st.cache_resource
 def load_model_cached():
-    import gdown
-    model_path = "fine_tuned_model.keras"
-
+    model_path = "final_model.keras"
     if not os.path.exists(model_path):
-        with st.spinner("Downloading model from Google Drive..."):
-            file_id = "1hgn92xI38X9HSTFW1ClpzhggL7awE0cZ"
-            url = f"https://drive.google.com/uc?id={file_id}"
-            try:
-                gdown.download(url, model_path, quiet=False)
-            except Exception as e:
-                st.error(f"❌ Failed to download model: {e}")
-                return None
-
+        st.error("Model file not found. Please ensure 'final_model.keras' is in the app directory.")
+        return None
     try:
         return load_model(model_path, compile=False)
     except Exception as e:
         st.error(f"❌ Model loading failed: {e}")
         return None
+
 
 # ✅ Add this to fix the error:
 model = load_model_cached()
