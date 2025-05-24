@@ -70,7 +70,8 @@ def load_model_cached():
             except Exception as e:
                 st.error(f"❌ Failed to download model: {e}")
                 return None
-    return load_model(model_path)
+    return load_model(model_path, compile=False)
+
 
 # ✅ Add this to fix the error:
 model = load_model_cached()
