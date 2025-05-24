@@ -72,6 +72,10 @@ def load_model_cached():
                 return None
     return load_model(model_path)
 
+# ✅ Add this to fix the error:
+model = load_model_cached()
+
+
 # Sidebar
 st.sidebar.header("🔍 Logo Detection")
 uploaded_file = st.sidebar.file_uploader("Upload Logo Image", type=["jpg", "jpeg", "png", "webp"])
