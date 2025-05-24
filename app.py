@@ -66,12 +66,15 @@ def load_model_cached():
     model_path = "fine_tuned_model.h5"
 
     if not os.path.exists(model_path):
-        with st.spinner("Downloading model from Google Drive..."):
-            try:
-                gdown.download(id="17P1ggqtgkSgnUW8i9feQ81MpRmgXoxZP", output=model_path, quiet=False, fuzzy=True)
-            except Exception as e:
-                st.error(f"❌ Failed to download model: {e}")
-                return None
+    with st.spinner("Downloading model from Google Drive..."):
+        file_id = "1uGjmYnj1i9606lX_CIzwEw_kjGBR_FuH"
+        url = f"https://drive.google.com/uc?id={file_id}"
+        try:
+            gdown.download(url, model_path, quiet=False)
+        except Exception as e:
+            st.error(f"❌ Failed to download model: {e}")
+            return None
+
 
     try:
         return load_model(model_path, compile=False)
